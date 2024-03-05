@@ -7,4 +7,5 @@ class IsOrderOwnerOrReadOnly(permissions.BasePermission):
         # so we'll always allow GET, HEAD or OPTIONS requests.
         if request.method in ['GET', 'HEAD', 'OPTIONS']:
             return True
-        return request.user == obj.user
+        return obj.user == request.user
+

@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated
+
 from .models import Book, Order
 from . import serializers, permissions
 from .viewsets import CustomModelViewSets
@@ -30,10 +32,16 @@ class OrderViewSet(CustomModelViewSets):
     """
     queryset = Order.objects.all()
     serializer_class = serializers.OrderSerializers
-    permission_classes = [permissions.IsOrderOwnerOrReadOnly]
     search_fields = ['book__title', 'user__username', 'user__email', 'book__genre']
     ordering_fields = ['id', 'created']
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
         return super().perform_create(serializer)
+
+    def get_permissions(self):
+        if self.action in ['create']:
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [permissions.IsOrderOwnerOrReadOnly]
+        return [permission() for permission in permission_classes]
