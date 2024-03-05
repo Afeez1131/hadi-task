@@ -16,8 +16,8 @@ users_url = 'http://127.0.0.1:8000/api/users/'
 book_url = 'http://127.0.0.1:8000/api/books/'
 BASE_URL = 'http://127.0.0.1:8000/api/orders/'
 if header:
-    users = requests.get(users_url, headers=header).json()
-    books = requests.get(book_url, headers=header).json()
+    users = requests.get(users_url, headers=header).json().get('results')
+    books = requests.get(book_url, headers=header).json().get('results')
     # print(users, books)
     if len(users) > 0 and len(books) > 0:
         user_id = users[0].get('id')

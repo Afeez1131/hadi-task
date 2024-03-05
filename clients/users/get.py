@@ -15,7 +15,7 @@ else:
 BASE_URL = 'http://127.0.0.1:8000/api/users/'
 if header:
     response = requests.get(BASE_URL, headers=header)
-    json_response = response.json()
+    json_response = response.json().get('results')
     print('json response: ', json_response)
 
     """getting an instance"""

@@ -13,15 +13,15 @@ else:
 
 BASE_URL = 'http://127.0.0.1:8000/api/users/'
 if header:
-    all_users = requests.get(BASE_URL, headers=header).json()
+    all_users = requests.get(BASE_URL, headers=header).json().get('results')
     if len(all_users) > 0:
         last = all_users[-1]
         delete_url = BASE_URL + f"{last.get('id')}/"
         print('deleting user:', delete_url)
-        count = len(requests.get(BASE_URL, headers=header).json())
+        count = len(requests.get(BASE_URL, headers=header).json().get('results'))
         print(f'before delete, we have {count} users')
         response = requests.delete(delete_url, headers=header)
-        count = len(requests.get(BASE_URL, headers=header).json())
+        count = len(requests.get(BASE_URL, headers=header).json().get('results'))
         print(f'after delete, we have {count} users left')
 else:
     print(f'invalid header: {header}')

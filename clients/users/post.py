@@ -14,8 +14,8 @@ else:
 BASE_URL = 'http://127.0.0.1:8000/api/users/'
 
 data = {
-    'username': 'django_user-2',
-    'email': 'django@mail.com',
+    'username': 'king',
+    'email': 'dja@mail.com',
     'password': 'password'
 }
 

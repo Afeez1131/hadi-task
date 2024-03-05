@@ -38,3 +38,14 @@ class OrderSerializers(serializers.ModelSerializer):
         model = Order
         fields = ['id', 'book', 'book_title', 'quantity', 'created', 'user']
         read_only_fields = ['id']
+
+    def validate_quantity(self, value):
+        book_id = self.initial_data.get('book', '')
+        quantity = self.initial_data.get('quantity', '')
+        try:
+            book = Book.objects.get(pk=book_id)
+        except Book.DoesNotExist:
+            raise serializers.ValidationError("Book does not exist")
+        if int(quantity) > book.quantity:
+            raise serializers.ValidationError("You cannot order for more than the available quantity")
+        return value

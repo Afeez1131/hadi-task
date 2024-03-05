@@ -15,6 +15,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=14, unique=True)
     genre = models.CharField(max_length=55, choices=BookGenre.choices)
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_positive_non_zero_value])
+    quantity = models.PositiveIntegerField(default=1, validators=[validate_positive_non_zero_value])
 
     class Meta:
         ordering = ('-id',)

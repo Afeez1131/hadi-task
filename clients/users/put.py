@@ -13,7 +13,7 @@ else:
     header = {'Authorization': 'Token ' + token}
 
 BASE_URL = 'http://127.0.0.1:8000/api/users/'
-all_users = requests.get(BASE_URL, headers=header).json()
+all_users = requests.get(BASE_URL, headers=header).json().get('results')
 if len(all_users) > 0:
     first = all_users[0]
     put_url = BASE_URL + f"{first.get('id')}/"

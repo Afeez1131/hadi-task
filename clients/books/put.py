@@ -19,7 +19,8 @@ BASE_URL = 'http://127.0.0.1:8000/api/books/'
 if header:
     all_books = requests.get(BASE_URL, headers=header).json()
     if len(all_books) > 0:
-        first = all_books[0]
+        print('all_books: ', all_books, '\n')
+        first = all_books.get('results')[0]
         put_url = BASE_URL + f"{str(first.get('id'))}/"
         print('before full update: ', requests.get(put_url, headers=header).json())
 

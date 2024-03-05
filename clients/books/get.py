@@ -20,7 +20,7 @@ if header:
     """getting an instance"""
     if len(json_response) >= 1:
         print('\n\n')
-        pk = json_response[0].get('id')
+        pk = json_response.get('results')[0].get('id', '')
         url = BASE_URL + str(pk)
         response = requests.get(url, headers=header)
         print(f'instance with ID: {pk} ', response.json())
