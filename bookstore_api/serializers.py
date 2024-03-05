@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
+from rest_framework.authtoken.models import Token
+
 from .models import Order, Book
 
 
@@ -22,7 +24,9 @@ class UserSerializers(serializers.ModelSerializer):
     def create(self, validated_data):
         """we need turn the plain text password into hashed password, else password won't be usable."""
         validated_data['password'] = make_password(validated_data.get('password'))
-        return super().create(validated_data)
+        user = super().create(validated_data)
+        Token.objects.get_or_create(user=user) # create authentication token
+        return user
 
 
 class OrderSerializers(serializers.ModelSerializer):
