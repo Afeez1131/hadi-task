@@ -1,9 +1,8 @@
 from django.contrib.auth.models import User
 
 from .models import Book, Order
-from . import serializers
+from . import serializers, permissions
 from .viewsets import CustomModelViewSets
-from rest_framework.authtoken.models import Token
 
 
 class BookViewSet(CustomModelViewSets):
@@ -19,4 +18,9 @@ class UserViewSet(CustomModelViewSets):
 class OrderViewSet(CustomModelViewSets):
     queryset = Order.objects.all()
     serializer_class = serializers.OrderSerializers
+    permission_classes = [permissions.IsOrderOwnerOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+        return super().perform_create(serializer)
 

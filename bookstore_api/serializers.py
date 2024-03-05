@@ -25,15 +25,16 @@ class UserSerializers(serializers.ModelSerializer):
         """we need turn the plain text password into hashed password, else password won't be usable."""
         validated_data['password'] = make_password(validated_data.get('password'))
         user = super().create(validated_data)
-        Token.objects.get_or_create(user=user) # create authentication token
+        Token.objects.get_or_create(user=user)  # create authentication token
         return user
 
 
 class OrderSerializers(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField(
+        source='user.username')
+    book_title = serializers.ReadOnlyField(source='book.title')
+
     class Meta:
         model = Order
-        fields = ['id', 'book', 'user', 'quantity', 'order_date']
+        fields = ['id', 'book', 'book_title', 'quantity', 'order_date', 'user']
         read_only_fields = ['id']
-
-
-
