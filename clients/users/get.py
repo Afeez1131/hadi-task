@@ -2,7 +2,7 @@ import requests
 
 
 AUTH_URL = 'http://127.0.0.1:8000/api/token-auth'
-auth_data = {'username': 'admin', 'password': 'password',}
+auth_data = {'username': 'admin', 'password': 'password'}
 
 response = requests.post(AUTH_URL, data=auth_data)
 json_response = response.json()
