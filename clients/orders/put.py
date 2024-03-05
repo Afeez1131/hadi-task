@@ -33,7 +33,7 @@ if header:
             'book': book_id,
             'user': user_id,
             'quantity': random.randint(25, 50),
-            'order_date': datetime.now().date()
+            'created': datetime.now().date()
         }
         response = requests.put(put_url, data=data, headers=header)
         print('after update: ', response.json())

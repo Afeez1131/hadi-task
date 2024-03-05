@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "bookstore_api.apps.BookstoreApiConfig",
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

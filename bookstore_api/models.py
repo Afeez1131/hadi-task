@@ -16,6 +16,9 @@ class Book(models.Model):
     genre = models.CharField(max_length=55, choices=BookGenre.choices)
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_positive_non_zero_value])
 
+    class Meta:
+        ordering = ('-id',)
+
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
@@ -28,7 +31,10 @@ class Order(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1, validators=[validate_positive_non_zero_value])
-    order_date = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-created',)
 
     def save(self, *args, **kwargs):
         self.full_clean()
